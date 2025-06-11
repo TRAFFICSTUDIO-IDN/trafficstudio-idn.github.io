@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Studio - Self Photo Studio Mobile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --accent: #4D8BFF;
+            --light: #ffffff;
+            --dark: #2A2A3C;
+            --gray: #f5f5f7;
+            --text: #4A4A6A;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            --transition: all 0.4s ease;
+            --border-radius: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 16px;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            border-radius: 50px;
+            background: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lang-switch:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .lang-switch span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--text);
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* About Section */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 20px auto 0;
+            color: var(--text);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 50px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--glass-border);
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .feature i {
+            color: var(--primary);
+            font-size: 24px;
+            background: rgba(108, 99, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(31, 38, 135, 0.2);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+
+        .service-icon i {
+            font-size: 32px;
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .service-card p {
+            margin-bottom: 25px;
+            color: var(--text);
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            position: relative;
+            padding: 100px 0;
+        }
+
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .pricing-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .pricing-card:hover {
+            transform: scale(1.03);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.popular:hover {
+            transform: scale(1.08);
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            margin: 25px 0;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li i {
+            color: var(--primary);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #6C63FF 0%, #4D8BFF 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact .section-header h2 {
+            color: white;
+        }
+
+        .contact-content {
+            display: flex;
+            gap: 60px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .contact-text h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-form {
+            flex: 1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        ::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.7);
+            padding: 70px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo img {
+            width: 180px;
+            border-radius: 12px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-links h4, .footer-newsletter h4 {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .footer-links h4:after, .footer-newsletter h4:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-newsletter p {
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .newsletter-form button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: var(--accent);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content, .about-content, .contact-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-buttons, .features {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                order: -1;
+            }
+            
+            .feature {
+                justify-content: center;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero {
+                padding: 150px 0 80px;
+            }
+            
+            .section {
+                padding: 80px 0;
+            }
+            
+            .about-content {
+                padding: 30px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .mobile-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--glass-bg);
+                backdrop-filter: blur(12px);
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                z-index: 999;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            
+            .contact-form {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <img src="https://raw.githubusercontent.com/TRAFFICSTUDIO-IDN/trafficstudio-idn.github.io/refs/heads/main/TRAFFIC-STUDIO.jpeg" alt="Traffic Studio Logo">
+                <h1>TRAFFIC STUDIO</h1>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#home" class="lang" data-key="home">Beranda</a>
+                <a href="#about" class="lang" data-key="about">Tentang Kami</a>
+                <a href="#services" class="lang" data-key="services">Layanan</a>
+                <a href="#pricing" class="lang" data-key="pricing">Harga</a>
+                <a href="#contact" class="lang" data-key="contact">Kontak</a>
+            </div>
+            
+            <div class="nav-buttons">
+                <div class="lang-switch" id="langSwitch">
+                    <i class="fas fa-globe"></i>
+                    <span class="lang" data-key="language">ID</span>
+                </div>
+                <a href="#contact" class="btn btn-primary lang" data-key="contactBtn">Hubungi Kami</a>
+                <button class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu" style="display: none;">
+            <a href="#home" class="lang" data-key="home">Beranda</a>
+            <a href="#about" class="lang" data-key="about">Tentang Kami</a>
+            <a href="#services" class="lang" data-key="services">Layanan</a>
+            <a href="#pricing" class="lang" data-key="pricing">Harga</a>
+            <a href="#contact" class="lang" data-key="contact">Kontak</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1><span class="lang" data-key="heroTitle">Self Photo Studio</span> <br><span class="lang" data-key="heroSubtitle">Mobile Experience</span></h1>
+                <p class="lang" data-key="heroText">Abadikan momen spesial Anda dengan konsep studio mandiri yang praktis dan menyenangkan. Sesuaikan tema sesuai keinginan Anda dan dapatkan pengalaman foto yang unik.</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary lang" data-key="bookBtn">Booking Sekarang</a>
+                    <a href="#about" class="btn btn-secondary lang" data-key="learnBtn">Pelajari Lebih Lanjut</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Photo Studio Experience">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="lang" data-key="aboutTitle">Tentang Traffic Studio</h2>
+                <p class="lang" data-key="aboutSubtitle">Pengalaman foto mandiri yang unik dan menyenangkan</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Traffic Studio Team">
+                </div>
+                <div class="about-text">
+                    <h3 class="lang" data-key="aboutHeading">Membawa Studio Foto ke Lokasi Anda</h3>
+                    <p class="lang" data-key="aboutText1">Traffic Studio adalah usaha kreatif berbasis di Sumatera Barat, Indonesia, yang menyediakan layanan Self Photo Studio Mobile. Dengan konsep studio dan foto mandiri, kami menawarkan pengalaman unik bagi pengguna untuk mengabadikan momen spesial secara praktis dan menyenangkan sesuai dengan tema yang diinginkan.</p>
+                    <p class="lang" data-key="aboutText2">Kami menyediakan mobile photo booth yang bisa datang ke lokasi acara Anda di daerah Kota Padang dan sekitarnya. Tidak perlu repot datang ke studio, kami yang akan mendatangi Anda!</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-palette"></i>
+                            <div class="feature-text">
+                                <h4 class="lang" data-key="feature1Title">Tema Kustom</h4>
+                                <p class="lang" data-key="feature1Text">Sesuaikan dengan acara atau keinginan Anda</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="feature-text">
+                                <h4 class="lang" data-key="feature2Title">Lokasi Fleksibel</h4>
+                                <p class="lang" data-key="feature2Text">Kami datang ke lokasi acara Anda</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-calendar-check"></i>
+                            <div class="feature-text">
+                                <h4 class="lang" data-key="feature3Title">Booking Online</h4>
+                                <p class="lang" data-key="feature3Text">Pemesanan mudah melalui platform digital</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-camera"></i>
+                            <div class="feature-text">
+                                <h4 class="lang" data-key="feature4Title">Photo Booth Mobile</h4>
+                                <p class="lang" data-key="feature4Text">Studio lengkap yang bisa berpindah-pindah</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="lang" data-key="servicesTitle">Layanan Kami</h2>
+                <p class="lang" data-key="servicesSubtitle">Berbagai pilihan layanan untuk kebutuhan foto Anda</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-camera-retro"></i>
+                    </div>
+                    <h3 class="lang" data-key="service1Title">Self Photo Studio</h3>
+                    <p class="lang" data-key="service1Text">Pengalaman studio foto mandiri dengan berbagai tema menarik yang bisa disesuaikan dengan acara Anda.</p>
+                    <div class="price">Rp 30.000 <span class="lang" data-key="perPerson">/orang</span></div>
+                    <a href="#contact" class="btn btn-primary lang" data-key="orderBtn">Pesan Sekarang</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="lang" data-key="service2Title">Mobile Photo Booth</h3>
+                    <p class="lang" data-key="service2Text">Photo booth lengkap dengan properti dan backdrop yang bisa dibawa ke lokasi acara Anda.</p>
+                    <div class="price">Rp 45.000 <span class="lang" data-key="perPerson">/orang</span></div>
+                    <a href="#contact" class="btn btn-primary lang" data-key="orderBtn">Pesan Sekarang</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-star"></i>
+                    </div>
+                    <h3 class="lang" data-key="service3Title">Event Photography</h3>
+                    <p class="lang" data-key="service3Text">Dokumentasi profesional untuk acara pernikahan, ulang tahun, seminar, dan acara khusus lainnya.</p>
+                    <div class="price">Rp 1.500.000 <span class="lang" data-key="perEvent">/acara</span></div>
+                    <a href="#contact" class="btn btn-primary lang" data-key="orderBtn">Pesan Sekarang</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="lang" data-key="pricingTitle">Paket Harga</h2>
+                <p class="lang" data-key="pricingSubtitle">Pilihan paket untuk kebutuhan berbeda</p>
+            </div>
+            
+            <div class="pricing-table">
+                <div class="pricing-card">
+                    <h3 class="lang" data-key="package1Title">Paket Per Sesi</h3>
+                    <div class="price">Rp 30.000 - 45.000 <span class="lang" data-key="perPerson">/orang</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package1Feature1">Minimal 50 orang</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package1Feature2">Durasi 1 sesi (30 menit)</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package1Feature3">1 tema pilihan</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package1Feature4">Cetak foto instan</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package1Feature5">Akses ke foto digital</span></li>
+                    </ul>
+                    <a href="#contact" class="btn btn-secondary lang" data-key="choosePlanBtn">Pilih Paket</a>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <div class="popular-tag lang" data-key="popularTag">POPULER</div>
+                    <h3 class="lang" data-key="package2Title">Paket Sewa 5 Jam</h3>
+                    <div class="price">Rp 3.600.000</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package2Feature1">Durasi 5 jam</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package2Feature2">Bebas jumlah sesi</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package2Feature3">3 tema pilihan</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package2Feature4">Cetak foto tanpa batas</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package2Feature5">Album foto digital lengkap</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package2Feature6">Properti tambahan</span></li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary lang" data-key="choosePlanBtn">Pilih Paket</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3 class="lang" data-key="package3Title">Paket Khusus Event</h3>
+                    <div class="price lang" data-key="customPrice">Harga Kustom</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package3Feature1">Durasi fleksibel</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package3Feature2">Tema khusus event</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package3Feature3">Photo booth premium</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package3Feature4">Fotografer profesional</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package3Feature5">Album foto eksklusif</span></li>
+                        <li><i class="fas fa-check"></i> <span class="lang" data-key="package3Feature6">Konsultasi desain tema</span></li>
+                    </ul>
+                    <a href="#contact" class="btn btn-secondary lang" data-key="contactUsBtn">Hubungi Kami</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="lang" data-key="contactTitle">Hubungi Kami</h2>
+                <p class="lang" data-key="contactSubtitle">Pesan layanan kami atau ajukan pertanyaan</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 class="lang" data-key="contactInfoTitle">Informasi Kontak</h3>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4 class="lang" data-key="addressTitle">Lokasi</h4>
+                                <p class="lang" data-key="addressText">Kota Padang & Sekitarnya, Sumatera Barat, Indonesia</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4 class="lang" data-key="emailTitle">Email</h4>
+                                <p>trafficstudio001@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4 class="lang" data-key="whatsappTitle">WhatsApp</h4>
+                                <p>+62 896-7610-0091</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="lang" data-key="formName">Nama Lengkap</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="lang" data-key="formEmail">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="lang" data-key="formPhone">Nomor Telepon</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="lang" data-key="formMessage">Pesan</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary lang" data-key="formSubmit">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://raw.githubusercontent.com/TRAFFICSTUDIO-IDN/trafficstudio-idn.github.io/refs/heads/main/TRAFFIC-STUDIO.jpeg" alt="Traffic Studio Logo">
+                    <p class="lang" data-key="footerText">Menyediakan pengalaman foto mandiri yang unik dan menyenangkan dengan studio mobile yang bisa datang ke lokasi Anda.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 class="lang" data-key="quickLinks">Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="#home" class="lang" data-key="home">Beranda</a></li>
+                        <li><a href="#about" class="lang" data-key="about">Tentang Kami</a></li>
+                        <li><a href="#services" class="lang" data-key="services">Layanan</a></li>
+                        <li><a href="#pricing" class="lang" data-key="pricing">Harga</a></li>
+                        <li><a href="#contact" class="lang" data-key="contact">Kontak</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 class="lang" data-key="ourServices">Layanan Kami</h4>
+                    <ul>
+                        <li><a href="#" class="lang" data-key="service1Title">Self Photo Studio</a></li>
+                        <li><a href="#" class="lang" data-key="service2Title">Mobile Photo Booth</a></li>
+                        <li><a href="#" class="lang" data-key="service3Title">Event Photography</a></li>
+                        <li><a href="#" class="lang" data-key="package1Title">Paket Per Sesi</a></li>
+                        <li><a href="#" class="lang" data-key="package2Title">Paket Sewa 5 Jam</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-newsletter">
+                    <h4 class="lang" data-key="newsletterTitle">Berlangganan</h4>
+                    <p class="lang" data-key="newsletterText">Dapatkan penawaran dan informasi terbaru dari Traffic Studio</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Email Anda" class="lang" data-key="newsletterPlaceholder">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="lang" data-key="copyright">&copy; <span id="currentYear"></span> Traffic Studio. <span class="lang" data-key="rights">All Rights Reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language switching functionality
+        const translations = {
+            "id": {
+                "home": "Beranda",
+                "about": "Tentang Kami",
+                "services": "Layanan",
+                "pricing": "Harga",
+                "contact": "Kontak",
+                "language": "ID",
+                "contactBtn": "Hubungi Kami",
+                "heroTitle": "Self Photo Studio",
+                "heroSubtitle": "Mobile Experience",
+                "heroText": "Abadikan momen spesial Anda dengan konsep studio mandiri yang praktis dan menyenangkan. Sesuaikan tema sesuai keinginan Anda dan dapatkan pengalaman foto yang unik.",
+                "bookBtn": "Booking Sekarang",
+                "learnBtn": "Pelajari Lebih Lanjut",
+                "aboutTitle": "Tentang Traffic Studio",
+                "aboutSubtitle": "Pengalaman foto mandiri yang unik dan menyenangkan",
+                "aboutHeading": "Membawa Studio Foto ke Lokasi Anda",
+                "aboutText1": "Traffic Studio adalah usaha kreatif berbasis di Sumatera Barat, Indonesia, yang menyediakan layanan Self Photo Studio Mobile. Dengan konsep studio dan foto mandiri, kami menawarkan pengalaman unik bagi pengguna untuk mengabadikan momen spesial secara praktis dan menyenangkan sesuai dengan tema yang diinginkan.",
+                "aboutText2": "Kami menyediakan mobile photo booth yang bisa datang ke lokasi acara Anda di daerah Kota Padang dan sekitarnya. Tidak perlu repot datang ke studio, kami yang akan mendatangi Anda!",
+                "feature1Title": "Tema Kustom",
+                "feature1Text": "Sesuaikan dengan acara atau keinginan Anda",
+                "feature2Title": "Lokasi Fleksibel",
+                "feature2Text": "Kami datang ke lokasi acara Anda",
+                "feature3Title": "Booking Online",
+                "feature3Text": "Pemesanan mudah melalui platform digital",
+                "feature4Title": "Photo Booth Mobile",
+                "feature4Text": "Studio lengkap yang bisa berpindah-pindah",
+                "servicesTitle": "Layanan Kami",
+                "servicesSubtitle": "Berbagai pilihan layanan untuk kebutuhan foto Anda",
+                "service1Title": "Self Photo Studio",
+                "service1Text": "Pengalaman studio foto mandiri dengan berbagai tema menarik yang bisa disesuaikan dengan acara Anda.",
+                "perPerson": "/orang",
+                "orderBtn": "Pesan Sekarang",
+                "service2Title": "Mobile Photo Booth",
+                "service2Text": "Photo booth lengkap dengan properti dan backdrop yang bisa dibawa ke lokasi acara Anda.",
+                "service3Title": "Event Photography",
+                "service3Text": "Dokumentasi profesional untuk acara pernikahan, ulang tahun, seminar, dan acara khusus lainnya.",
+                "perEvent": "/acara",
+                "pricingTitle": "Paket Harga",
+                "pricingSubtitle": "Pilihan paket untuk kebutuhan berbeda",
+                "package1Title": "Paket Per Sesi",
+                "package1Feature1": "Minimal 50 orang",
+                "package1Feature2": "Durasi 1 sesi (30 menit)",
+                "package1Feature3": "1 tema pilihan",
+                "package1Feature4": "Cetak foto instan",
+                "package1Feature5": "Akses ke foto digital",
+                "choosePlanBtn": "Pilih Paket",
+                "package2Title": "Paket Sewa 5 Jam",
+                "package2Feature1": "Durasi 5 jam",
+                "package2Feature2": "Bebas jumlah sesi",
+                "package2Feature3": "3 tema pilihan",
+                "package2Feature4": "Cetak foto tanpa batas",
+                "package2Feature5": "Album foto digital lengkap",
+                "package2Feature6": "Properti tambahan",
+                "package3Title": "Paket Khusus Event",
+                "customPrice": "Harga Kustom",
+                "package3Feature1": "Durasi fleksibel",
+                "package3Feature2": "Tema khusus event",
+                "package3Feature3": "Photo booth premium",
+                "package3Feature4": "Fotografer profesional",
+                "package3Feature5": "Album foto eksklusif",
+                "package3Feature6": "Konsultasi desain tema",
+                "contactUsBtn": "Hubungi Kami",
+                "popularTag": "POPULER",
+                "contactTitle": "Hubungi Kami",
+                "contactSubtitle": "Pesan layanan kami atau ajukan pertanyaan",
+                "contactInfoTitle": "Informasi Kontak",
+                "addressTitle": "Lokasi",
+                "addressText": "Kota Padang & Sekitarnya, Sumatera Barat, Indonesia",
+                "emailTitle": "Email",
+                "whatsappTitle": "WhatsApp",
+                "formName": "Nama Lengkap",
+                "formEmail": "Email",
+                "formPhone": "Nomor Telepon",
+                "formMessage": "Pesan",
+                "formSubmit": "Kirim Pesan",
+                "quickLinks": "Tautan Cepat",
+                "ourServices": "Layanan Kami",
+                "newsletterTitle": "Berlangganan",
+                "newsletterText": "Dapatkan penawaran dan informasi terbaru dari Traffic Studio",
+                "newsletterPlaceholder": "Email Anda",
+                "copyright": "&copy;",
+                "rights": "All Rights Reserved."
+            },
+            "en": {
+                "home": "Home",
+                "about": "About Us",
+                "services": "Services",
+                "pricing": "Pricing",
+                "contact": "Contact",
+                "language": "EN",
+                "contactBtn": "Contact Us",
+                "heroTitle": "Self Photo Studio",
+                "heroSubtitle": "Mobile Experience",
+                "heroText": "Capture your special moments with a practical and fun self-photo studio concept. Customize the theme according to your wishes and get a unique photo experience.",
+                "bookBtn": "Book Now",
+                "learnBtn": "Learn More",
+                "aboutTitle": "About Traffic Studio",
+                "aboutSubtitle": "Unique and enjoyable self-photo experience",
+                "aboutHeading": "Bringing the Photo Studio to Your Location",
+                "aboutText1": "Traffic Studio is a creative business based in West Sumatra, Indonesia, providing Self Photo Studio Mobile services. With a self-studio and self-photo concept, we offer a unique experience for users to capture special moments practically and enjoyably according to the desired theme.",
+                "aboutText2": "We provide a mobile photo booth that can come to your event location in Padang City and surrounding areas. No need to bother coming to the studio, we will come to you!",
+                "feature1Title": "Custom Theme",
+                "feature1Text": "Customize according to your event or preference",
+                "feature2Title": "Flexible Location",
+                "feature2Text": "We come to your event location",
+                "feature3Title": "Online Booking",
+                "feature3Text": "Easy booking through digital platforms",
+                "feature4Title": "Mobile Photo Booth",
+                "feature4Text": "Complete studio that can move around",
+                "servicesTitle": "Our Services",
+                "servicesSubtitle": "Various service options for your photo needs",
+                "service1Title": "Self Photo Studio",
+                "service1Text": "Self-photo studio experience with various interesting themes that can be tailored to your event.",
+                "perPerson": "/person",
+                "orderBtn": "Order Now",
+                "service2Title": "Mobile Photo Booth",
+                "service2Text": "Complete photo booth with props and backdrop that can be brought to your event location.",
+                "service3Title": "Event Photography",
+                "service3Text": "Professional documentation for weddings, birthdays, seminars, and other special events.",
+                "perEvent": "/event",
+                "pricingTitle": "Pricing Plans",
+                "pricingSubtitle": "Package options for different needs",
+                "package1Title": "Per Session Package",
+                "package1Feature1": "Minimum 50 people",
+                "package1Feature2": "Duration 1 session (30 minutes)",
+                "package1Feature3": "1 chosen theme",
+                "package1Feature4": "Instant photo printing",
+                "package1Feature5": "Access to digital photos",
+                "choosePlanBtn": "Choose Plan",
+                "package2Title": "5-Hour Rental Package",
+                "package2Feature1": "5-hour duration",
+                "package2Feature2": "Unlimited sessions",
+                "package2Feature3": "3 chosen themes",
+                "package2Feature4": "Unlimited photo printing",
+                "package2Feature5": "Complete digital photo album",
+                "package2Feature6": "Additional props",
+                "package3Title": "Special Event Package",
+                "customPrice": "Custom Price",
+                "package3Feature1": "Flexible duration",
+                "package3Feature2": "Special event theme",
+                "package3Feature3": "Premium photo booth",
+                "package3Feature4": "Professional photographer",
+                "package3Feature5": "Exclusive photo album",
+                "package3Feature6": "Theme design consultation",
+                "contactUsBtn": "Contact Us",
+                "popularTag": "POPULAR",
+                "contactTitle": "Contact Us",
+                "contactSubtitle": "Book our services or ask questions",
+                "contactInfoTitle": "Contact Information",
+                "addressTitle": "Location",
+                "addressText": "Padang City & Surroundings, West Sumatra, Indonesia",
+                "emailTitle": "Email",
+                "whatsappTitle": "WhatsApp",
+                "formName": "Full Name",
+                "formEmail": "Email",
+                "formPhone": "Phone Number",
+                "formMessage": "Message",
+                "formSubmit": "Send Message",
+                "quickLinks": "Quick Links",
+                "ourServices": "Our Services",
+                "newsletterTitle": "Newsletter",
+                "newsletterText": "Get the latest offers and information from Traffic Studio",
+                "newsletterPlaceholder": "Your Email",
+                "copyright": "&copy;",
+                "rights": "All Rights Reserved."
+            }
+        };
+
+        let currentLang = 'id';
+        
+        function switchLanguage() {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            document.querySelectorAll('.lang').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[currentLang][key]) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+            // Update language switch text
+            document.querySelector('#langSwitch span').textContent = currentLang.toUpperCase();
+        }
+        
+        document.getElementById('langSwitch').addEventListener('click', switchLanguage);
+        
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        hamburger.addEventListener('click', () => {
+            if (mobileMenu.style.display === 'flex') {
+                mobileMenu.style.display = 'none';
+            } else {
+                mobileMenu.style.display = 'flex';
+            }
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.style.display = 'none';
+            });
+        });
+        
+        // Current year for footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert(currentLang === 'id' ? 'Pesan Anda telah terkirim! Kami akan menghubungi Anda segera.' : 'Your message has been sent! We will contact you shortly.');
+            this.reset();
+        });
+        
+        // Initialize ScrollReveal
+        ScrollReveal().reveal('.hero-text, .hero-image', {
+            delay: 300,
+            distance: '50px',
+            origin: 'bottom',
+            duration: 1000,
+            reset: true
+        });
+        
+        ScrollReveal().reveal('.section-header, .about-content, .service-card, .pricing-card, .contact-content', {
+            delay: 300,
+            distance: '30px',
+            origin: 'bottom',
+            interval: 200,
+            duration: 800,
+            reset: true
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
