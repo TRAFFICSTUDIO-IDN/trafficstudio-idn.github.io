@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Hindari indexing file sensitif (ubah jika butuh)
+Disallow: /node_modules/
+Disallow: /private/
+# jika tidak ada folder tersebut, Disallow baris di atas tidak berpengaruh
+
+Sitemap: https://trafficstudio-idn.github.io/sitemap.xml
+Host: trafficstudio-idn.github.io
